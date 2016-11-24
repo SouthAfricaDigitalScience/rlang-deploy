@@ -44,6 +44,7 @@ fi
 tar xjf  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
+CFLAGS="$CFLAGS -I$BZLIB_DIR/include -L${BZLIB_DIR}/lib"
 ../configure \
 --prefix=${SOFT_DIR} \
 --with-blas \
