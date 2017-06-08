@@ -9,7 +9,7 @@ module add jdk/8u66
 module add ncurses
 module add readline
 
-SOURCE_FILE=${NAME}-${VERSION}.tar.bz2
+SOURCE_FILE=${NAME}-${VERSION}.tar.gz
 
 echo "REPO_DIR is "
 echo $REPO_DIR
@@ -29,7 +29,7 @@ mkdir -p ${SOFT_DIR}
 if [ ! -e ${SRC_DIR}/${SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${SOURCE_FILE} ] ; then
   touch  ${SRC_DIR}/${SOURCE_FILE}.lock
   echo "seems like this is the first build - let's geet the source"
-  wget http://cran.mirror.ac.za/src/base/R-3/${NAME}-${VERSION}.tar.bz2 -O ${SRC_DIR}/${SOURCE_FILE}
+  wget http://cran.mirror.ac.za/src/base/R-3/${NAME}-${VERSION}.tar.gz -O ${SRC_DIR}/${SOURCE_FILE}
   echo "releasing lock"
   rm -v ${SRC_DIR}/${SOURCE_FILE}.lock
 elif [ -e ${SRC_DIR}/${SOURCE_FILE}.lock ] ; then
@@ -41,7 +41,7 @@ elif [ -e ${SRC_DIR}/${SOURCE_FILE}.lock ] ; then
 else
   echo "continuing from previous builds, using source at " ${SRC_DIR}/${SOURCE_FILE}
 fi
-tar xj  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
+tar xz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 CFLAGS="$CFLAGS -I$BZLIB_DIR/include -L${BZLIB_DIR}/lib"
