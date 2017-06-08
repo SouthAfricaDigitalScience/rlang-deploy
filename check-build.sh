@@ -2,7 +2,6 @@
 . /etc/profile.d/modules.sh
 module add ci
 
-module add zlib
 module add openblas/0.2.15-gcc-5.4.0
 module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
@@ -28,12 +27,9 @@ proc ModulesHelp { } {
 }
 
 module-whatis   "$NAME $VERSION."
-setenv       GMP_VERSION       $VERSION
-setenv       GMP_DIR           /data/ci-build/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
-prepend-path LD_LIBRARY_PATH   $::env(GMP_DIR)/lib
-prepend-path GCC_INCLUDE_DIR   $::env(GMP_DIR)/include
-prepend-path CFLAGS            "-I${GMP_DIR}/include"
-prepend-path LDFLAGS           "-L${GMP_DIR}/lib"
+setenv       R_LANG_VERSION       $VERSION
+setenv       R_LANG_DIR           /data/ci-build/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
+prepend-path LD_LIBRARY_PATH   $::env(R_LANG_DIR)/lib
 MODULE_FILE
 ) > modules/$VERSION
 

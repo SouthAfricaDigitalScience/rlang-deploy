@@ -13,8 +13,8 @@ CFLAGS="$CFLAGS -I$BZLIB_DIR/include -L${BZLIB_DIR}/lib"
 --with-lapack \
 make
 make install
-echo "Creating the modules file directory ${LIBRARIES_MODULES}"
-mkdir -p ${LIBRARIES_MODULES}/${NAME}
+echo "Creating the modules file directory ${LIBRARIES}"
+mkdir -p ${LIBRARIES}/${NAME}
 (
 cat <<MODULE_FILE
 #%Module1.0
@@ -25,12 +25,10 @@ proc ModulesHelp { } {
     puts stderr "       that the [module-info name] module is not available"
 }
 
-module-whatis   "$NAME $VERSION : See https://github.com/SouthAfricaDigitalScience/gmp-deploy"
-setenv GMP_VERSION       $VERSION
-setenv GMP_DIR           $::env(CVMFS_DIR)/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
-prepend-path LD_LIBRARY_PATH   $::env(GMP_DIR)/lib
-prepend-path GCC_INCLUDE_DIR   $::env(GMP_DIR)/include
-prepend-path CFLAGS            "-I${GMP_DIR}/include"
-prepend-path LDFLAGS           "-L${GMP_DIR}/lib"
+module-whatis   "$NAME $VERSION : See https://github.com/SouthAfricaDigitalScience/R_LANG-deploy"
+setenv R_LANG_VERSION       $VERSION
+setenv R_LANG_DIR           $::env(CVMFS_DIR)/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
+prepend-path LD_LIBRARY_PATH   $::env(R_LANG_DIR)/lib
+prepend-path LDFLAGS           "-L$::env(R_LANG_DIR)/lib"
 MODULE_FILE
-) > ${LIBRARIES_MODULES}/${NAME}/${VERSION}
+) > ${LIBRARIES}/${NAME}/${VERSION}

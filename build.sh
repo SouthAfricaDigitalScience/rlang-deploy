@@ -2,7 +2,6 @@
 . /etc/profile.d/modules.sh
 
 module add ci
-module add zlib
 module add openblas/0.2.15-gcc-5.4.0
 module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
