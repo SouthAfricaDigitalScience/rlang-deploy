@@ -46,8 +46,8 @@ fi
 tar xfz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-CFLAGS="$CFLAGS -I$BZLIB_DIR/include" \
-LDFLAGS="-L${BZLIB_DIR}/lib" \
+CFLAGS="$CFLAGS -I$BZLIB_DIR/include -I${LZ_DIR}/include" \
+LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib" \
 ../configure \
 --build=x86_64-pc-linux-gnu \
 --host=x86_64-pc-linux-gnu \
