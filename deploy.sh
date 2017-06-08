@@ -6,11 +6,13 @@ module add deploy
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
-../configure ABI=64 \
---with-gnu-ld \
---enable-shared \
---prefix=${SOFT_DIR}
-make install -j2
+CFLAGS="$CFLAGS -I$BZLIB_DIR/include -L${BZLIB_DIR}/lib"
+../configure \
+--prefix=${SOFT_DIR} \
+--with-blas \
+--with-lapack \
+make
+make install
 echo "Creating the modules file directory ${LIBRARIES_MODULES}"
 mkdir -p ${LIBRARIES_MODULES}/${NAME}
 (

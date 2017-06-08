@@ -3,11 +3,11 @@
 
 module add ci
 module add zlib
-module add openblas/0.2.15-gcc-5.1.0
-module add lapack/3.6.0-gcc-5.1.0
+module add openblas/0.2.15-gcc-5.4.0
+module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
-module add readline/6.3
+module add readline
 
 SOURCE_FILE=${NAME}-${VERSION}.tar.bz2
 
@@ -29,7 +29,7 @@ mkdir -p ${SOFT_DIR}
 if [ ! -e ${SRC_DIR}/${SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${SOURCE_FILE} ] ; then
   touch  ${SRC_DIR}/${SOURCE_FILE}.lock
   echo "seems like this is the first build - let's geet the source"
-  wget http://mirror.ufs.ac.za/gnu/gnu/gmp/${SOURCE_FILE} -O ${SRC_DIR}/${SOURCE_FILE}
+  wget http://cran.mirror.ac.za/src/base/R-3/${NAME}-${VERSION}.tar.gz -O ${SRC_DIR}/${SOURCE_FILE}
   echo "releasing lock"
   rm -v ${SRC_DIR}/${SOURCE_FILE}.lock
 elif [ -e ${SRC_DIR}/${SOURCE_FILE}.lock ] ; then
@@ -49,4 +49,4 @@ CFLAGS="$CFLAGS -I$BZLIB_DIR/include -L${BZLIB_DIR}/lib"
 --prefix=${SOFT_DIR} \
 --with-blas \
 --with-lapack \
-make -j 2
+make
