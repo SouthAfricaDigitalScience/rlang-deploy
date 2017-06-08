@@ -1,7 +1,7 @@
 #!/bin/bash -e
 . /etc/profile.d/modules.sh
 module add ci
-
+module add  gcc/5.4.0
 module add openblas/0.2.15-gcc-5.4.0
 module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
@@ -33,5 +33,5 @@ prepend-path LD_LIBRARY_PATH   $::env(R_LANG_DIR)/lib
 MODULE_FILE
 ) > modules/$VERSION
 
-mkdir -p ${LIBRARIES_MODULES}/${NAME}
-cp modules/$VERSION ${LIBRARIES_MODULES}/${NAME}
+mkdir -p ${LIBRARIES}/${NAME}
+cp modules/$VERSION ${LIBRARIES}/${NAME}

@@ -3,6 +3,12 @@
 . /etc/profile.d/modules.sh
 echo ${SOFT_DIR}
 module add deploy
+module add  gcc/5.4.0
+module add openblas/0.2.15-gcc-5.4.0
+module add lapack/3.6.0-gcc-5.4.0
+module add jdk/8u66
+module add ncurses
+module add readline
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
