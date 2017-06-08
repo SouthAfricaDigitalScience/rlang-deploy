@@ -7,7 +7,8 @@ module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
 module add readline
-
+module  add  bzip2
+module add  xz
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
 

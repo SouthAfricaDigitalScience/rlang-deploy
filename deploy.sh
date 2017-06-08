@@ -9,10 +9,13 @@ module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
 module add readline
+module  add  bzip2
+module add  xz
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
-CFLAGS="$CFLAGS -I$BZLIB_DIR/include -L${BZLIB_DIR}/lib"
+CFLAGS="$CFLAGS -I$BZLIB_DIR/include -I${XZ_DIR}/include" \
+LDFLAGS="$LDFLAGS -L${BZLIB_DIR}/lib -L${XZ_DIR}/lib" \
 ../configure \
 --prefix=${SOFT_DIR} \
 --with-blas \

@@ -8,6 +8,8 @@ module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
 module add readline
+module add bzip2
+module  add xz
 
 SOURCE_FILE=${NAME}-${VERSION}.tar.gz
 
@@ -44,11 +46,18 @@ fi
 tar xfz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-CFLAGS="$CFLAGS -I$BZLIB_DIR/include -L${BZLIB_DIR}/lib"
+CFLAGS="$CFLAGS -I$BZLIB_DIR/include" \
+LDFLAGS="-L${BZLIB_DIR}/lib" \
 ../configure \
+--build=x86_64-pc-linux-gnu \
+--host=x86_64-pc-linux-gnu \
+--target=x86_64-pc-linux-gnu \
 --prefix=${SOFT_DIR} \
+--enable-static \
+--enable-shared \
 --with-readline=no \
 --with-x=no \
 --with-blas \
 --with-lapack \
+
 make
