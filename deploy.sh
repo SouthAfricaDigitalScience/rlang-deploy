@@ -14,8 +14,8 @@ module add  xz
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
-CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include" \
-LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -llzma" \
+export CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE2_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
+export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE2_DIR}/lib -llzma -lreadline -lncurses"
 ../configure \
 --build=x86_64-pc-linux-gnu \
 --host=x86_64-pc-linux-gnu \
@@ -23,11 +23,16 @@ LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -llzma" \
 --prefix=${SOFT_DIR} \
 --enable-static \
 --enable-shared \
---with-readline=no \
+--enable-pcre2-16 \
+--enable-pcre2-32 \
+--enable-pcre2grep-libbz2 \
+--enable-pcre2test-libreadline \
+--with-readline=yes \
 --with-x=no \
 --with-blas \
 --with-lapack \
 --without-recommended-packages
+
 
 make
 make install
@@ -43,10 +48,14 @@ proc ModulesHelp { } {
     puts stderr "       that the [module-info name] module is not available"
 }
 
-module-whatis   "$NAME $VERSION : See https://github.com/SouthAfricaDigitalScience/R_LANG-deploy"
+module-whatis   "$NAME $VERSION : See https://github.com/SouthAfricaDigitalScience/rlang-deploy"
 setenv R_LANG_VERSION       $VERSION
 setenv R_LANG_DIR           $::env(CVMFS_DIR)/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
 prepend-path LD_LIBRARY_PATH   $::env(R_LANG_DIR)/lib
 prepend-path LDFLAGS           "-L$::env(R_LANG_DIR)/lib"
 MODULE_FILE
 ) > ${LIBRARIES}/${NAME}/${VERSION}
+
+module  avail ${NAME}
+
+module add ${NAME}/${VERSION}

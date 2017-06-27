@@ -46,8 +46,8 @@ fi
 tar xfz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include" \
-LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -llzma" \
+export CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE2_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
+export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE2_DIR}/lib -llzma -lreadline -lncurses"
 ../configure \
 --build=x86_64-pc-linux-gnu \
 --host=x86_64-pc-linux-gnu \
@@ -55,7 +55,11 @@ LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -llzma" \
 --prefix=${SOFT_DIR} \
 --enable-static \
 --enable-shared \
---with-readline=no \
+--enable-pcre2-16 \
+--enable-pcre2-32 \
+--enable-pcre2grep-libbz2 \
+--enable-pcre2test-libreadline \
+--with-readline=yes \
 --with-x=no \
 --with-blas \
 --with-lapack \
