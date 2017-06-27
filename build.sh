@@ -12,18 +12,8 @@ module add bzip2
 module  add xz
 module add openssl/1.0.2j
 module  add curl
-module  add pcre2
+module  add pcre
 SOURCE_FILE=${NAME}-${VERSION}.tar.gz
-
-echo "REPO_DIR is "
-echo $REPO_DIR
-echo "SRC_DIR is "
-echo $SRC_DIR
-echo "WORKSPACE is "
-echo $WORKSPACE
-echo "SOFT_DIR is"
-echo $SOFT_DIR
-
 mkdir -p ${WORKSPACE}
 mkdir -p ${SRC_DIR}
 mkdir -p ${SOFT_DIR}
@@ -48,19 +38,14 @@ fi
 tar xfz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-export CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE2_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
-export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE2_DIR}/lib -llzma -lreadline -lncurses"
+export CFLAGS="-I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
+export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE_DIR}/lib -llzma -lreadline -lncurses"
+export BLAS_LIBS="-L${OPENBLAS_DIR}/lib -lblas"
+export LAPACK_LIBS="-L${LAPACK_DIR}/lib -llapack.so.3"
 ../configure \
---build=x86_64-pc-linux-gnu \
---host=x86_64-pc-linux-gnu \
---target=x86_64-pc-linux-gnu \
 --prefix=${SOFT_DIR} \
 --enable-static \
 --enable-shared \
---enable-pcre2-16 \
---enable-pcre2-32 \
---enable-pcre2grep-libbz2 \
---enable-pcre2test-libreadline \
 --with-readline=yes \
 --with-x=no \
 --with-blas \

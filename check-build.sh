@@ -11,7 +11,7 @@ module add bzip2
 module  add xz
 module add openssl/1.0.2j
 module  add curl
-module  add pcre2
+module  add pcre
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
 

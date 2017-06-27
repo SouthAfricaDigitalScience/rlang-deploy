@@ -13,16 +13,13 @@ module add bzip2
 module  add xz
 module add openssl/1.0.2j
 module  add curl
-module  add pcre2
+module  add pcre
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
-export CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE2_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
-export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE2_DIR}/lib -llzma -lreadline -lncurses"
+export CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
+export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE_DIR}/lib -llzma -lreadline -lncurses"
 ../configure \
---build=x86_64-pc-linux-gnu \
---host=x86_64-pc-linux-gnu \
---target=x86_64-pc-linux-gnu \
 --prefix=${SOFT_DIR} \
 --enable-static \
 --enable-shared \
