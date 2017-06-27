@@ -14,12 +14,20 @@ module add  xz
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
-CFLAGS="$CFLAGS -I$BZLIB_DIR/include -I${XZ_DIR}/include" \
-LDFLAGS="$LDFLAGS -L${BZLIB_DIR}/lib -L${XZ_DIR}/lib" \
+CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${LZ_DIR}/include" \
+LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib" \
 ../configure \
+--build=x86_64-pc-linux-gnu \
+--host=x86_64-pc-linux-gnu \
+--target=x86_64-pc-linux-gnu \
 --prefix=${SOFT_DIR} \
+--enable-static \
+--enable-shared \
+--with-readline=no \
+--with-x=no \
 --with-blas \
---with-lapack \
+--with-lapack
+
 make
 make install
 echo "Creating the modules file directory ${LIBRARIES}"
