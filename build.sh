@@ -10,7 +10,9 @@ module add ncurses
 module add readline
 module add bzip2
 module  add xz
-
+module add openssl/1.0.2j
+module  add curl
+module  add pcre2
 SOURCE_FILE=${NAME}-${VERSION}.tar.gz
 
 echo "REPO_DIR is "
@@ -66,3 +68,4 @@ export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCU
 --without-recommended-packages
 
 make
+make all

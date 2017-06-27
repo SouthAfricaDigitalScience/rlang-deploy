@@ -9,8 +9,11 @@ module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
 module add readline
-module  add  bzip2
-module add  xz
+module add bzip2
+module  add xz
+module add openssl/1.0.2j
+module  add curl
+module  add pcre2
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
