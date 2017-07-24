@@ -39,7 +39,8 @@ tar xfz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 export CFLAGS="-I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
-export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE_DIR}/lib -llzma -lreadline -lncurses"
+export CPPFLAGS="-I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
+export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE_DIR}/lib -lbz2 -llzma -lreadline -lncurses"
 export BLAS_LIBS="-L${OPENBLAS_DIR}/lib -lblas"
 export LAPACK_LIBS="-L${LAPACK_DIR}/lib -llapack.so.3"
 ../configure \
