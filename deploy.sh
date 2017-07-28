@@ -14,25 +14,45 @@ module  add xz
 module add openssl/1.0.2j
 module  add curl
 module  add pcre
+module add zlib
+
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-echo "All tests have passed, will now build into ${SOFT_DIR}"
-export CFLAGS="${CFLAGS} -I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
-export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE_DIR}/lib -llzma -lreadline -lncurses"
+echo "tests have passed - building into ${SOFT_DIR}"
+rm -rf *
+export CFLAGS="-I${BZLIB_DIR}/include \
+-I${XZ_DIR}/include \
+-I${PCRE_DIR}/include \
+-I${READLINE_DIR}/include  \
+-I${NCURSES_DIR}/include \
+-I${ZLIB_DIR}/include \
+-I${LIBPNG_DIR}/include  \
+-I${JPEG_DIR}/include \
+-I${ICU_DIR}/include"
+export LDFLAGS="-L${JPEG_DIR}/lib \
+-L${BZLIB_DIR}/lib \
+-L${XZ_DIR}/lib \
+-L${READLINE_DIR}/lib \
+-L${NCURSES_DIR}/lib \
+-L${PCRE_DIR}/lib \
+-L${ZLIB_DIR}/lib \
+-L${LIBPNG_DIR}/lib \
+-L${JPEG_DIR}/lib \
+-L${ICU_DIR}/lib \
+-lz -lbz2 -llzma -lreadline -lncurses -lpng -ljpeg -licudata -licuio -licui18n -licutu"
+export BLAS_LIBS="-L${OPENBLAS_DIR}/lib -lblas"
+export LAPACK_LIBS="-L${LAPACK_DIR}/lib -llapack.so.3"
 ../configure \
 --prefix=${SOFT_DIR} \
 --enable-static \
 --enable-shared \
---enable-pcre2-16 \
---enable-pcre2-32 \
---enable-pcre2grep-libbz2 \
---enable-pcre2test-libreadline \
 --with-readline=yes \
+--with-libpng=yes \
+--with-jpeglib=yes \
 --with-x=no \
 --with-blas \
 --with-lapack \
---without-recommended-packages
-
+--with-recommended-packages
 
 make
 make install

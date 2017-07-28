@@ -13,6 +13,10 @@ module  add xz
 module add openssl/1.0.2j
 module  add curl
 module  add pcre
+module add zlib
+module add  icu/59_1-gcc-5.4.0
+module  add  jpeg/9b
+module add libpng/1.6.27
 SOURCE_FILE=${NAME}-${VERSION}.tar.gz
 mkdir -p ${WORKSPACE}
 mkdir -p ${SRC_DIR}
@@ -38,9 +42,26 @@ fi
 tar xfz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-export CFLAGS="-I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
-export CPPFLAGS="-I${BZLIB_DIR}/include -I${XZ_DIR}/include -I${PCRE_DIR}/include -I${READLINE_DIR}/include  -I${NCURSES_DIR}/include"
-export LDFLAGS="-L${BZLIB_DIR}/lib -L${XZ_DIR}/lib -L${READLINE_DIR}/lib -L${NCURSES_DIR}/lib -L${PCRE_DIR}/lib -lbz2 -llzma -lreadline -lncurses"
+export CFLAGS="-I${BZLIB_DIR}/include \
+-I${XZ_DIR}/include \
+-I${PCRE_DIR}/include \
+-I${READLINE_DIR}/include  \
+-I${NCURSES_DIR}/include \
+-I${ZLIB_DIR}/include \
+-I${LIBPNG_DIR}/include  \
+-I${JPEG_DIR}/include \
+-I${ICU_DIR}/include"
+export LDFLAGS="-L${JPEG_DIR}/lib \
+-L${BZLIB_DIR}/lib \
+-L${XZ_DIR}/lib \
+-L${READLINE_DIR}/lib \
+-L${NCURSES_DIR}/lib \
+-L${PCRE_DIR}/lib \
+-L${ZLIB_DIR}/lib \
+-L${LIBPNG_DIR}/lib \
+-L${JPEG_DIR}/lib \
+-L${ICU_DIR}/lib \
+-lz -lbz2 -llzma -lreadline -lncurses -lpng -ljpeg -licudata -licuio -licui18n -licutu"
 export BLAS_LIBS="-L${OPENBLAS_DIR}/lib -lblas"
 export LAPACK_LIBS="-L${LAPACK_DIR}/lib -llapack.so.3"
 ../configure \
@@ -48,10 +69,12 @@ export LAPACK_LIBS="-L${LAPACK_DIR}/lib -llapack.so.3"
 --enable-static \
 --enable-shared \
 --with-readline=yes \
+--with-libpng=yes \
+--with-jpeglib=yes \
 --with-x=no \
 --with-blas \
 --with-lapack \
---without-recommended-packages
+--with-recommended-packages
 
 make
 make all

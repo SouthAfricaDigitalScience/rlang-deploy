@@ -12,6 +12,7 @@ module  add xz
 module add openssl/1.0.2j
 module  add curl
 module  add pcre
+module add zlib
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
 
