@@ -20,7 +20,7 @@ echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "tests have passed - building into ${SOFT_DIR}"
 rm -rf *
-export CFLAGS="-I${BZLIB_DIR}/include \
+export CPPFLAGS="-I${BZLIB_DIR}/include \
 -I${XZ_DIR}/include \
 -I${PCRE_DIR}/include \
 -I${READLINE_DIR}/include  \
@@ -39,9 +39,11 @@ export LDFLAGS="-L${JPEG_DIR}/lib \
 -L${LIBPNG_DIR}/lib \
 -L${JPEG_DIR}/lib \
 -L${ICU_DIR}/lib \
+-L${OPENBLAS_DIR}/lib \
+-L${LAPACK_DIR}/lib \
 -lz -lbz2 -llzma -lreadline -lncurses -lpng -ljpeg -licudata -licuio -licui18n -licutu"
-export BLAS_LIBS="-L${OPENBLAS_DIR}/lib -lblas"
-export LAPACK_LIBS="-L${LAPACK_DIR}/lib -llapack.so.3"
+export BLAS_LIBS="openblas.so"
+export LAPACK_LIBS="lapack.so"
 ../configure \
 --prefix=${SOFT_DIR} \
 --enable-static \
