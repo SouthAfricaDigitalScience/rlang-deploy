@@ -12,7 +12,7 @@ module add bzip2
 module add xz
 module add openssl/1.0.2j
 module add curl
-module add pcre
+module add pcre2
 module add zlib
 module add icu/59_1-gcc-5.4.0
 module add jpeg/9b

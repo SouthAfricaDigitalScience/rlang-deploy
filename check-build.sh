@@ -1,18 +1,21 @@
 #!/bin/bash -e
 . /etc/profile.d/modules.sh
 module add ci
-module add  gcc/5.4.0
+module add gcc/5.4.0
 module add openblas/0.2.15-gcc-5.4.0
 module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
 module add readline
 module add bzip2
-module  add xz
+module add xz
 module add openssl/1.0.2j
-module  add curl
-module  add pcre
+module add curl
+module add pcre2
 module add zlib
+module add icu/59_1-gcc-5.4.0
+module add jpeg/9b
+module add libpng/1.6.27
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
 
