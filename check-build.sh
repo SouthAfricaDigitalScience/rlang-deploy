@@ -35,8 +35,14 @@ module-whatis   "$NAME $VERSION."
 setenv       R_LANG_VERSION       $VERSION
 setenv       R_LANG_DIR           /data/ci-build/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
 prepend-path LD_LIBRARY_PATH   $::env(R_LANG_DIR)/lib
+prepend-path PATH              $::ev(R_LANG_DIR)/bin
 MODULE_FILE
 ) > modules/$VERSION
 
 mkdir -p ${LIBRARIES}/${NAME}
 cp modules/$VERSION ${LIBRARIES}/${NAME}
+
+# check the module
+echo "checking the module"
+module add ${NAME}/${VERSION}
+which R

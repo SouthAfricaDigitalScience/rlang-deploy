@@ -3,18 +3,21 @@
 . /etc/profile.d/modules.sh
 echo ${SOFT_DIR}
 module add deploy
-module add  gcc/5.4.0
+module add gcc/5.4.0
 module add openblas/0.2.15-gcc-5.4.0
 module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
 module add readline
 module add bzip2
-module  add xz
+module add xz
 module add openssl/1.0.2j
-module  add curl
-module  add pcre
+module add curl
+module add pcre2
 module add zlib
+module add icu/59_1-gcc-5.4.0
+module add jpeg/9b
+module add libpng/1.6.27
 
 echo ${SOFT_DIR}
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
@@ -28,7 +31,9 @@ export CPPFLAGS="-I${BZLIB_DIR}/include \
 -I${ZLIB_DIR}/include \
 -I${LIBPNG_DIR}/include  \
 -I${JPEG_DIR}/include \
--I${ICU_DIR}/include"
+-I${ICU_DIR}/include
+-L${OPENBLAS_DIR}/lib \
+-L${LAPACK_DIR}/lib"
 export LDFLAGS="-L${JPEG_DIR}/lib \
 -L${BZLIB_DIR}/lib \
 -L${XZ_DIR}/lib \
@@ -75,6 +80,7 @@ setenv R_LANG_VERSION       $VERSION
 setenv R_LANG_DIR           $::env(CVMFS_DIR)/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
 prepend-path LD_LIBRARY_PATH   $::env(R_LANG_DIR)/lib
 prepend-path LDFLAGS           "-L$::env(R_LANG_DIR)/lib"
+prepent-path PATH              "$::env(R_LANG_DIR)/bin"
 MODULE_FILE
 ) > ${LIBRARIES}/${NAME}/${VERSION}
 

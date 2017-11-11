@@ -2,20 +2,20 @@
 . /etc/profile.d/modules.sh
 
 module add ci
-module add  gcc/5.4.0
+module add gcc/5.4.0
 module add openblas/0.2.15-gcc-5.4.0
 module add lapack/3.6.0-gcc-5.4.0
 module add jdk/8u66
 module add ncurses
 module add readline
 module add bzip2
-module  add xz
+module add xz
 module add openssl/1.0.2j
-module  add curl
-module  add pcre
+module add curl
+module add pcre
 module add zlib
-module add  icu/59_1-gcc-5.4.0
-module  add  jpeg/9b
+module add icu/59_1-gcc-5.4.0
+module add jpeg/9b
 module add libpng/1.6.27
 SOURCE_FILE=${NAME}-${VERSION}.tar.gz
 mkdir -p ${WORKSPACE}
@@ -41,22 +41,29 @@ else
 fi
 tar xfz  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/${NAME}-${VERSION}/tools
+
+# HT https://stat.ethz.ch/pipermail/r-devel/2016-May/072777.html
+./rsync-recommended
 cd ${WORKSPACE}/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-export CPPLAGS="-I${BZLIB_DIR}/include \
+
+export CPPFLAGS="-I${BZLIB_DIR}/include \
 -I${XZ_DIR}/include \
--I${PCRE_DIR}/include \
+-I${PCRE2_DIR}/include \
 -I${READLINE_DIR}/include  \
 -I${NCURSES_DIR}/include \
 -I${ZLIB_DIR}/include \
 -I${LIBPNG_DIR}/include  \
 -I${JPEG_DIR}/include \
--I${ICU_DIR}/include"
+-I${ICU_DIR}/include \
+-L${OPENBLAS_DIR}/lib \
+-L${LAPACK_DIR}/lib"
 export LDFLAGS="-L${JPEG_DIR}/lib \
 -L${BZLIB_DIR}/lib \
 -L${XZ_DIR}/lib \
 -L${READLINE_DIR}/lib \
 -L${NCURSES_DIR}/lib \
--L${PCRE_DIR}/lib \
+-L${PCRE2_DIR}/lib \
 -L${ZLIB_DIR}/lib \
 -L${LIBPNG_DIR}/lib \
 -L${JPEG_DIR}/lib \
